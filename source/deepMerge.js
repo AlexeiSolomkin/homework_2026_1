@@ -33,7 +33,6 @@
  * 
  * @returns {Object} новый объединенный объект
  */
-
 const deepMerge = function (source, target) {
     let mergedObject = {};
     const keys = new Set([
