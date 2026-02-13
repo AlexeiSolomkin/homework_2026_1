@@ -80,4 +80,35 @@ QUnit.module("Тестируем функцию deepMerge", function() {
         const result = deepMerge(source, target);
         assert.deepEqual(result, expected, "Должно возвращать исходный объект при отсутствии второго");
     });
+
+    QUnit.test("Работает при глубокой рекурсии на нескольких уровнях", function(assert) {
+        const source = {
+        a: { b: { c: 1, d: { e: 2 } }, x: 1 },
+        k: 5
+        };
+
+        const target = {
+        a: { b: { c: 3, d: { f: 4 } }, y: 2 },
+        k: 7
+        };
+
+        const expected = {
+        a: { b: { c: 3, d: { e: 2, f: 4 } }, x: 1, y: 2 },
+        k: 7
+        };
+        
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Рекурсивно объединяет вложенные plain-объекты");
+    });
+
+    QUnit.test("Рабоотает с null-значениями на совпадающих ключах", function(assert) {
+        const source = { a: null };
+
+        const target = { a: null };
+
+        const expected = { a: null };
+        
+        const result = deepMerge(source, target);
+        assert.deepEqual(result, expected, "Должно возвращать объект с полем null");
+    });
 });
